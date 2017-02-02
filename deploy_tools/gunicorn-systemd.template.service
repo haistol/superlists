@@ -1,0 +1,12 @@
+
+[Unit]
+Description = Gunicorn server for SITENAME
+
+[Service]
+Restart = on-failure
+User = jdelarosa
+WorkingDirectory = /home/jdelarosa/sites/SITENAME/source
+ExecStart= /home/jdelarosa/sites/SITENAME/virtualenv/bin/gunicorn --bin$
+
+[Install]
+WantedBy= multi-user.target
