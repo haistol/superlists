@@ -1,41 +1,10 @@
+from .base import FunctionalTest, Firefox_Diver_Path
 from selenium import webdriver
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.webdriver.common.keys import Keys
-from django.test import LiveServerTestCase
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 import sys
 
-class NewVisitorTest(StaticLiveServerTestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        for arg in sys.argv:
-            if 'liveserver' in arg:
-                cls.server_url = 'http://'+ arg.split('=')[1]
-                return
-        super().setUpClass()
-        cls.server_url= cls.live_server_url
-
-    @classmethod
-    def tearDownClass(cls):
-        if cls.server_url== cls.live_server_url:
-            super().tearDownClass()
-
-    def setUp(self):
-        self.browser = webdriver.Firefox(firefox_binary=FirefoxBinary(
-            firefox_path='/home/darkwizard48/Downloads/firefox/firefox'))
-
-        self.browser.implicitly_wait(3)
-
-    def tearDown(self):
-        self.browser.quit()
-        
-
-    def check_for_row_in_list_table(self, row_text):
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn(row_text, [row.text for row in rows])
-
+class NewVisitorTest(FunctionalTest):
 
     def test_can_start_a_list_and_retrieve_it_later(self):
         # Edith has heard about a cool new online to-do app. shw goes
@@ -82,7 +51,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         ## of Edith's is coming through from cookies etc
         self.browser.quit()
         self.browser = webdriver.Firefox(firefox_binary=FirefoxBinary(
-            firefox_path='/home/darkwizard48/Downloads/firefox/firefox'))
+            firefox_path=Firefox_Diver_Path))
 
         # Francis visits the home page. There is no sign of Edith's
         # list
@@ -108,19 +77,3 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.assertIn('Buy milk', page_text)
 
         # Satisfied, they both go back to sleep
-
-    def test_layout_and_styling(self):
-        # Edith goes to the home page
-        self.browser.get(self.server_url)
-        self.browser.set_window_size(1024,768)
-        
-        inputbox = self.browser.find_element_by_id('id_new_item')
-        self.assertAlmostEqual(inputbox.location['x'] + inputbox.size['width']/2,
-        512,delta=5)
-        
-        # She starts a new list and sees the input is nicely
-        # centered there too
-        inputbox.send_keys('testing\n')
-        inputbox = self.browser.find_element_by_id('id_new_item')
-        self.assertAlmostEqual(inputbox.location['x'] + inputbox.size['width']/2,
-        512,delta=5)
