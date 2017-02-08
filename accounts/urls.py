@@ -3,6 +3,6 @@ from accounts import views
 
 urlpatterns = [
     url(r'^send_email$', views.send_login_email, name='send_login_email'),
-    url(r'^login$', views.send_login_email, name='login'),
-    url(r'^logout$', views.send_login_email, name='logout'),
+    url(r'^login$', views.login, name='login'),
+    url(r'^logout$', views.logout, name='logout'),
 ]
