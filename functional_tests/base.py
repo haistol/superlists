@@ -1,4 +1,4 @@
-from pyvirtualdisplay import Display
+#from pyvirtualdisplay import Display
 from selenium import webdriver
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.webdriver.common.keys import Keys
@@ -7,8 +7,8 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 import sys
 from unittest import skip
 
-#Firefox_Diver_Path='/home/darkwizard48/Downloads/firefox/firefox'
-Firefox_Diver_Path='/home/ubuntu/workspace/firefox/firefox'
+Firefox_Diver_Path='/home/darkwizard48/Downloads/firefox/firefox'
+#Firefox_Diver_Path='/home/ubuntu/workspace/firefox/firefox'
 
 class FunctionalTest(StaticLiveServerTestCase):
 
@@ -27,8 +27,8 @@ class FunctionalTest(StaticLiveServerTestCase):
             super().tearDownClass()
 
     def setUp(self):
-        self.display = Display(visible=0, size=(1024, 768))
-        self.display.start()
+ #       self.display = Display(visible=0, size=(1024, 768))
+  #      self.display.start()
         self.browser = webdriver.Firefox(firefox_binary=FirefoxBinary(
             firefox_path=Firefox_Diver_Path))
 
@@ -37,7 +37,7 @@ class FunctionalTest(StaticLiveServerTestCase):
     def tearDown(self):
         
         self.browser.quit()
-        self.display.stop()
+   #     self.display.stop()
         
 
     def check_for_row_in_list_table(self, row_text):
