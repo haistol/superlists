@@ -12,6 +12,7 @@ Class-based views
 Including another URLconf
     1. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.contrib.auth.views import logout
 from django.conf.urls import include, url
 from django.contrib import admin
 from accounts import views
@@ -19,5 +20,6 @@ from accounts import views
 urlpatterns = [
     url(r'^send_login_email$', views.send_login_email, name='send_login_email'),
     url(r'^login$', views.login, name='login'),
-    #url(r'^admin/', include(admin.site.urls)),
+    url(r'^logout$', logout, {'next_page': '/'}, name='logout'),
+    
 ]
